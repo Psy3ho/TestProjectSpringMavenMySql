@@ -1,20 +1,22 @@
 package com.example.TestProject.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+    @NotEmpty
     private String name;
 
+    @NotEmpty
     private String email;
 
+    @NotEmpty
     private String password;
 
     public Integer getId() {
@@ -49,7 +51,15 @@ public class User {
         this.password = password;
     }
 
-
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
 
 

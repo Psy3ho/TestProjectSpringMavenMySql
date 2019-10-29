@@ -1,19 +1,22 @@
 package com.example.TestProject.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Table(name = "items")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
+
+    @NotEmpty
     private String itemName;
 
-    private String description;
+
+    @NotEmpty
+    private String itemDescription;
 
     public Integer getId() {
         return id;
@@ -31,11 +34,20 @@ public class Item {
         this.itemName = itemName;
     }
 
-    public String getDescription() {
-        return description;
+    public String getItemDescription() {
+        return itemDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setItemDescription(String itemDescription) {
+        this.itemDescription = itemDescription;
+    }
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", itemName='" + itemName + '\'' +
+                ", description='" + itemDescription + '\'' +
+                '}';
     }
 }
