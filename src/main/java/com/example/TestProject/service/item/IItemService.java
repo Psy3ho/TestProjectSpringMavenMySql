@@ -1,11 +1,11 @@
-package com.example.TestProject.service;
+package com.example.TestProject.service.item;
 
 import com.example.TestProject.model.Item;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IItemBusinessLogic {
+public interface IItemService {
 
     void addItem(String itemName, String itemDescription);
 

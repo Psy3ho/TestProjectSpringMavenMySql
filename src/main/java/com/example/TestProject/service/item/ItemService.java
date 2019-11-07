@@ -1,4 +1,4 @@
-package com.example.TestProject.service;
+package com.example.TestProject.service.item;
 
 import com.example.TestProject.model.Item;
 import com.example.TestProject.repository.ItemRepository;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ItemBusinessLogic implements IItemBusinessLogic {
+public class ItemService implements IItemService {
 
     @Autowired
     private ItemRepository itemRepository;

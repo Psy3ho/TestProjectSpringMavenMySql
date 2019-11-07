@@ -1,15 +1,19 @@
-package com.example.TestProject.service;
+package com.example.TestProject.service.user;
 
 import com.example.TestProject.model.User;
 import com.example.TestProject.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserBusinessLogic implements IUserBusinessLogic {
+public class UserService implements IUserService {
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -18,7 +22,7 @@ public class UserBusinessLogic implements IUserBusinessLogic {
     public void addUser(String name, String email, String password) {
         User user = new User();
 
-        user.setName(name);
+        user.setUserName(name);
         user.setEmail(email);
         user.setPassword(password);
 
@@ -31,7 +35,7 @@ public class UserBusinessLogic implements IUserBusinessLogic {
         if(updated.isPresent()) {
             User present  = updated.get();
             if(name != null) {
-                present.setName(name);
+                present.setUserName(name);
             }
             if(email != null) {
                 present.setEmail(email);
@@ -59,6 +63,17 @@ public class UserBusinessLogic implements IUserBusinessLogic {
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User findByUsername(String userName) {
+       return userRepository.findByUserName(userName);
+    }
+
+    @Override
+    public void save(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
     }
 
     @Override
