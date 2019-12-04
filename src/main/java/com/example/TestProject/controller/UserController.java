@@ -16,7 +16,7 @@ import java.util.List;
 
 //@RestController
 //@RequestMapping(path = "/users")
-@Controller
+@RestController
 public class UserController {
 
     @Autowired
@@ -28,13 +28,16 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @GetMapping(value = "/registration")
+    /*@GetMapping(value = "/registration")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
         return "registration";
-    }
-    @PostMapping(value = "*registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    }*/
+    @PostMapping(value = "/registration")
+    public String registration(@RequestBody User userForm, BindingResult bindingResult) {
+
+
+        System.out.println(userForm.getPassword() + "heslo");
         userValidator.validate(userForm, bindingResult);
 
         if(bindingResult.hasErrors()) {
@@ -42,13 +45,15 @@ public class UserController {
         }
 
         userService.save(userForm);
+        //userService.addUser(userForm.getUserName(),userForm.getEmail(),userForm.getPasswordConfirm());
+
 
         securityService.autoLogin(userForm.getUserName(), userForm.getPasswordConfirm());
 
         return "redirect:/welcome";
     }
 
-    @GetMapping(value = "/login")
+    @PostMapping(value = "/login")
     public String Login(Model model, String error, String logout) {
         if(error != null) model.addAttribute("error","Your username and password is invalid");
 
